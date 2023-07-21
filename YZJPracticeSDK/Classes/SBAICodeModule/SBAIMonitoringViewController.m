@@ -12,30 +12,31 @@
 
 #import "SBAIPractice.h"
 //#import "IDLFaceSDK.h"
-#import <IDLFaceSDK/IDLFaceSDK.h>
+//#import <IDLFaceSDK/IDLFaceSDK.h>
 
-@interface SBAIMonitoringViewController ()<CaptureDataOutputProtocol,UIGestureRecognizerDelegate>
+@interface SBAIMonitoringViewController ()
+//<CaptureDataOutputProtocol,UIGestureRecognizerDelegate>
 
-@property (nonatomic, retain) BDFaceVideoCaptureDevice *videoCapture;
-
-@property (nonatomic, retain) UILabel * remindDetailLabel;
-
-
-@property (nonatomic, assign) BOOL hasFinished;
-/**
- *  视频i流回显view
- */
-@property (nonatomic, retain) UIImageView *displayImageView;
-
-/**
- * 人脸检测view，与视频流rect 一致
- */
-@property (nonatomic, assign) CGRect previewRect;
-
-/**
- *  人脸预览view ，最大预览框之内，最小预览框之外，根据该view 提示离远离近
- */
-@property (nonatomic, assign) CGRect detectRect;
+//@property (nonatomic, retain) BDFaceVideoCaptureDevice *videoCapture;
+//
+//@property (nonatomic, retain) UILabel * remindDetailLabel;
+//
+//
+//@property (nonatomic, assign) BOOL hasFinished;
+///**
+// *  视频i流回显view
+// */
+//@property (nonatomic, retain) UIImageView *displayImageView;
+//
+///**
+// * 人脸检测view，与视频流rect 一致
+// */
+//@property (nonatomic, assign) CGRect previewRect;
+//
+///**
+// *  人脸预览view ，最大预览框之内，最小预览框之外，根据该view 提示离远离近
+// */
+//@property (nonatomic, assign) CGRect detectRect;
 
 @end
 
@@ -43,12 +44,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self setupui];
-    [self initBaiduFace];
+//
+//    [self setupui];
+//    [self initBaiduFace];
     
 }
-
+/**
 #pragma mark ----------初始化百度人脸识别
 -(void)initBaiduFace{
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -326,5 +327,5 @@
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+ */
 @end

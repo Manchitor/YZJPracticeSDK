@@ -1,0 +1,6 @@
+framework module SBSDK {
+  umbrella header "SBSDK.h"
+
+  export *
+  module * { export * }
+}

@@ -1,6 +1,6 @@
 {
   "name": "YZJPracticeSDK",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "A short description of YZJPracticeSDK.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/Manchitor/YZJPracticeSDK",
@@ -13,13 +13,13 @@
   },
   "source": {
     "git": "https://github.com/Manchitor/YZJPracticeSDK.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "11.0"
   },
   "source_files": "YZJPracticeSDK/Classes/**/*",
-  "vendored_frameworks": "YZJPracticeSDK/Classes/SBAIFramework/IDLFaceSDK.framework",
+  "vendored_frameworks": "YZJPracticeSDK/Classes/SBAIFramework/SBSDK.framework",
   "resource_bundles": {
     "YZJPractice": [
       "YZJPracticeSDK/Assets/*"
