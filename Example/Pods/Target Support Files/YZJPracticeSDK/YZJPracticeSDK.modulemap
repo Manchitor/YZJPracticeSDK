@@ -1,0 +1,6 @@
+framework module YZJPracticeSDK {
+  umbrella header "YZJPracticeSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

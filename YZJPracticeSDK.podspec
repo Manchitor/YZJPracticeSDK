@@ -26,17 +26,28 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Manchitor' => '18721218206@163.com' }
   s.source           = { :git => 'https://github.com/Manchitor/YZJPracticeSDK.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '10.0'
+  
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'YZJPracticeSDK/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'YZJPracticeSDK' => ['YZJPracticeSDK/Assets/*.png']
-  # }
+  s.vendored_frameworks = 'YZJPracticeSDK/Classes/SBAIFramework/IDLFaceSDK.framework'
+  
+  s.resource_bundles = {'YZJPractice' => ['YZJPracticeSDK/Assets/*']}
+  
+  s.pod_target_xcconfig = { 'VALID_ARCHS[sdk=iphonesimulator*]' => ' ' }
+    
+  s.xcconfig = { "OTHER_LDFLAGS" => "-ObjC" }
+  
+  s.static_framework = true
+  
+  s.public_header_files = 'YZJPracticeSDK/Classes/**/*.h'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+# s.frameworks = 'UIKit', 'MapKit'
+  s.dependency 'AFNetworking'
+  s.dependency 'Masonry'
+  s.dependency 'MJRefresh'
+  s.dependency 'MJExtension'
+  s.dependency 'MBProgressHUD'
+  s.dependency 'SDWebImage'
 end

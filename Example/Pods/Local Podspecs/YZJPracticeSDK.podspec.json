@@ -1,0 +1,56 @@
+{
+  "name": "YZJPracticeSDK",
+  "version": "0.1.0",
+  "summary": "A short description of YZJPracticeSDK.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Manchitor/YZJPracticeSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Manchitor": "18721218206@163.com"
+  },
+  "source": {
+    "git": "https://github.com/Manchitor/YZJPracticeSDK.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source_files": "YZJPracticeSDK/Classes/**/*",
+  "vendored_frameworks": "YZJPracticeSDK/Classes/SBAIFramework/IDLFaceSDK.framework",
+  "resource_bundles": {
+    "YZJPractice": [
+      "YZJPracticeSDK/Assets/*"
+    ]
+  },
+  "pod_target_xcconfig": {
+    "VALID_ARCHS[sdk=iphonesimulator*]": " "
+  },
+  "xcconfig": {
+    "OTHER_LDFLAGS": "-ObjC"
+  },
+  "static_framework": true,
+  "public_header_files": "YZJPracticeSDK/Classes/**/*.h",
+  "dependencies": {
+    "AFNetworking": [
+
+    ],
+    "Masonry": [
+
+    ],
+    "MJRefresh": [
+
+    ],
+    "MJExtension": [
+
+    ],
+    "MBProgressHUD": [
+
+    ],
+    "SDWebImage": [
+
+    ]
+  }
+}
