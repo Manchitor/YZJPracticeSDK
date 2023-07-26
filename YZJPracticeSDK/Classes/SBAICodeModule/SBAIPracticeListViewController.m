@@ -55,7 +55,7 @@
         make.bottom.equalTo(self.mas_bottomLayoutGuideBottom).offset(0);
     }];//底线上面 mas_bottomLayoutGuideTop
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.recordListButton];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.recordListButton];
     
 }
 

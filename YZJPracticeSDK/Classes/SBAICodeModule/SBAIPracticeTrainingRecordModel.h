@@ -11,13 +11,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SBAIPracticeTrainingRecordModel : NSObject
 
-@property (nonatomic,copy) NSString *exerciseName;
+@property (nonatomic,copy) NSString *empid;//成员id
 
-@property (nonatomic,copy) NSString *id;
+@property (nonatomic,copy) NSString *id;//考核(或训练)记录id
 
-@property (nonatomic,assign) CGFloat answerAnalyseScore;
+@property (nonatomic,assign) CGFloat answerAnalyseScore;//考核(或训练)总分
 
-@property (nonatomic,copy) NSString *exerciseDate;
+@property (nonatomic,copy) NSString *exerciseDate;//考核(或训练)时间
+
+@property (nonatomic,copy) NSString *exerciseEndDate;//考核(或训练)结束时间
+
+@property (nonatomic,assign) int stageType;//0 培训；1考核
 
 
 @end

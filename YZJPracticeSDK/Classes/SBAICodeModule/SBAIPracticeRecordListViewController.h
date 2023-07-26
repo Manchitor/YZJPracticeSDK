@@ -10,7 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SBAIPracticeRecordListViewController : SBAIBaseViewController
-
+@property (nonatomic,assign) BOOL isPass;
+@property (nonatomic,copy) NSString *exerciseId;
 @end
 
 NS_ASSUME_NONNULL_END

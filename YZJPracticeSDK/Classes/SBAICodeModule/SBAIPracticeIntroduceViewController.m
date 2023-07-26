@@ -8,6 +8,8 @@
 #import "SBAIPracticeIntroduceViewController.h"
 #import "SBAIPracticeDetailViewController.h"
 #import "SBPracticeDownLoadProgressButton.h"
+#import "SBAIPracticeRecordMainViewController.h"
+
 #import "SBAIPracticeRequest.h"
 #import "SBAIPracticeModel.h"
 #import "SBAIPractice.h"
@@ -18,6 +20,9 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
 
 @property (nonatomic,strong) UIImageView *bgImg;
 @property (nonatomic,strong) UIImageView *avatar;
+
+@property (nonatomic,strong) UIView *bg;
+
 @property (nonatomic,strong) UILabel *nameLabel;
 @property (nonatomic,strong) UIView *positionView;
 @property (nonatomic,strong) UILabel *positionLabel;
@@ -27,10 +32,25 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
 @property (nonatomic,strong) SBPracticeDownLoadProgressButton *downloadButton;
 @property (nonatomic,strong) UIView *practiceView;
 
-@property (nonatomic,strong) UILabel *qualifiedScoreLabel;
-@property (nonatomic,strong) UILabel *practiceCountLabel;
-@property (nonatomic,strong) UILabel *bestScoreLabel;
-@property (nonatomic,strong) UILabel *qualifiedCountLabel;
+
+@property (nonatomic,strong) UILabel *qualifiedTitleLabel;
+@property (nonatomic,strong) UILabel *qualifiedLabel;
+
+@property (nonatomic,strong) UILabel *faceTitleLabel;
+@property (nonatomic,strong) UILabel *faceLabel;
+
+
+@property (nonatomic,strong) UILabel *trainTitleLabel;
+@property (nonatomic,strong) UILabel *trainLabel;
+
+
+@property (nonatomic,strong) UILabel *examineTitleLabel;
+@property (nonatomic,strong) UILabel *examineLabel;
+
+
+@property (nonatomic,strong) UILabel *bestLabel;
+
+@property (nonatomic,strong) UIButton *recordButton;
 
 @property (nonatomic,strong) SBAIPracticeModel *dataModel;
 
@@ -55,29 +75,37 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     
     [self.view addSubview:self.bgImg];
     [self.bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.right.equalTo(self.view.mas_right).offset(0);
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(0);
+        make.height.mas_equalTo(250);
+    }];
+    
+    [self.view addSubview:self.bg];
+    [self.bg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(60);
         make.left.equalTo(self.view.mas_left).offset(15);
         make.right.equalTo(self.view.mas_right).offset(-15);
-        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(50);
-        make.bottom.equalTo(self.mas_bottomLayoutGuideBottom).offset(-20);
+        make.height.mas_equalTo(415);
     }];
     
     [self.view addSubview:self.avatar];
     [self.avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.width.height.mas_equalTo(80);
-        make.top.equalTo(self.bgImg.mas_top).offset(-40);
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(20);
     }];
     
-    [self.view addSubview:self.nameLabel];
+    [self.bg addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(self.avatar.mas_bottom).offset(15);
+        make.centerX.equalTo(self.bg);
+        make.top.equalTo(self.bg.mas_top).offset(55);
     }];
     
-    [self.view addSubview:self.positionView];
+    [self.bg addSubview:self.positionView];
     [self.positionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(self.nameLabel.mas_bottom).offset(5);
+        make.centerX.equalTo(self.bg);
+        make.top.equalTo(self.nameLabel.mas_bottom).offset(13);
         make.height.mas_equalTo(16);
     }];
     
@@ -86,60 +114,103 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
         make.center.equalTo(self.positionView);
     }];
     
-    [self.view addSubview:self.downloadButton];
-    [self.downloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(60);
-        make.right.equalTo(self.view.mas_right).offset(-60);
-        make.bottom.equalTo(self.bgImg.mas_bottom).offset(-120);
-        make.height.mas_equalTo(40);
-    }];
-    
-    [self.view addSubview:self.testButton];
-    [self.testButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view).offset(-90);
-        make.width.mas_equalTo(120);
-        make.height.mas_equalTo(40);
-        make.top.equalTo(self.downloadButton.mas_top);
-    }];
-    
-    [self.view addSubview:self.praceticeButton];
-    [self.praceticeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view).offset(90);
-        make.width.mas_equalTo(120);
-        make.height.mas_equalTo(40);
-        make.top.equalTo(self.downloadButton.mas_top);
-    }];
-    
-    [self.view addSubview:self.practiceView];
+    [self.bg addSubview:self.practiceView];
     [self.practiceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(20);
-        make.right.equalTo(self.view.mas_right).offset(-30);
-        make.bottom.equalTo(self.bgImg.mas_bottom).offset(-20);
+        make.left.equalTo(self.bg.mas_left).offset(0);
+        make.right.equalTo(self.bg.mas_right).offset(0);
+        make.top.equalTo(self.positionView.mas_bottom).offset(40);
         make.height.mas_equalTo(100);
     }];
     
-    [self.practiceView addSubview:self.qualifiedScoreLabel];
-    [self.qualifiedScoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.practiceView.mas_left).offset(15);
-        make.top.equalTo(self.practiceView.mas_top).offset(15);
+    //合格
+    [self.practiceView addSubview:self.qualifiedLabel];
+    [self.qualifiedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.practiceView.mas_centerX).offset(-36);
+        make.top.equalTo(self.practiceView.mas_top).offset(0);
     }];
     
-    [self.practiceView addSubview:self.bestScoreLabel];
-    [self.bestScoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.qualifiedScoreLabel.mas_left);
-        make.top.equalTo(self.qualifiedScoreLabel.mas_bottom).offset(15);
+    [self.practiceView addSubview:self.qualifiedTitleLabel];
+    [self.qualifiedTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.qualifiedLabel.mas_left).offset(0);
+        make.top.equalTo(self.practiceView.mas_top).offset(0);
     }];
     
-    [self.practiceView addSubview:self.qualifiedCountLabel];
-    [self.qualifiedCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.practiceView.mas_right).offset(-15);
-        make.top.equalTo(self.practiceView.mas_top).offset(15);
+    //人脸
+    [self.practiceView addSubview:self.faceLabel];
+    [self.faceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.practiceView.mas_centerX).offset(-36);
+        make.top.equalTo(self.qualifiedLabel.mas_bottom).offset(10);
     }];
     
-    [self.practiceView addSubview:self.practiceCountLabel];
-    [self.practiceCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.qualifiedCountLabel.mas_right);
-        make.top.equalTo(self.qualifiedCountLabel.mas_bottom).offset(15);
+    [self.practiceView addSubview:self.faceTitleLabel];
+    [self.faceTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.qualifiedLabel.mas_left).offset(0);
+        make.top.equalTo(self.qualifiedTitleLabel.mas_bottom).offset(10);
+    }];
+    
+    //训练
+    [self.practiceView addSubview:self.trainTitleLabel];
+    [self.trainTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.practiceView.mas_centerX).offset(36);
+        make.top.equalTo(self.practiceView.mas_top).offset(0);
+    }];
+    
+    [self.practiceView addSubview:self.trainLabel];
+    [self.trainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.trainTitleLabel.mas_right).offset(0);
+        make.top.equalTo(self.practiceView.mas_top).offset(0);
+    }];
+    
+    //考核
+    [self.practiceView addSubview:self.examineTitleLabel];
+    [self.examineTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.practiceView.mas_centerX).offset(36);
+        make.top.equalTo(self.trainTitleLabel.mas_bottom).offset(10);
+    }];
+    
+    [self.practiceView addSubview:self.examineLabel];
+    [self.examineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.examineTitleLabel.mas_right).offset(0);
+        make.top.equalTo(self.trainLabel.mas_bottom).offset(10);
+    }];
+   
+    
+    [self.bg addSubview:self.downloadButton];
+    [self.downloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.bg.mas_left).offset(50);
+        make.right.equalTo(self.bg.mas_right).offset(-50);
+        make.bottom.equalTo(self.bg.mas_bottom).offset(-30);
+        make.height.mas_equalTo(42);
+    }];
+    
+    [self.bg addSubview:self.testButton];
+    [self.testButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.bg.mas_centerX).offset(-80);
+        make.width.mas_equalTo(135);
+        make.height.mas_equalTo(42);
+        make.top.equalTo(self.downloadButton.mas_top);
+    }];
+    
+    [self.bg addSubview:self.praceticeButton];
+    [self.praceticeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.bg.mas_centerX).offset(80);
+        make.width.mas_equalTo(135);
+        make.height.mas_equalTo(42);
+        make.top.equalTo(self.downloadButton.mas_top);
+    }];
+    
+    [self.bg addSubview:self.bestLabel];
+    [self.bestLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.bg.mas_centerX).offset(-20);
+        make.bottom.equalTo(self.downloadButton.mas_top).offset(-35);
+    }];
+    
+    [self.bg addSubview:self.recordButton];
+    [self.recordButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.bg.mas_centerX).offset(20);
+        make.centerY.equalTo(self.bestLabel);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(20);
     }];
 }
 
@@ -184,48 +255,64 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     
     self.positionLabel.text = tf_isEmptyString(self.dataModel.robotCareer) ? @"" : self.dataModel.robotCareer;
     
-    self.qualifiedScoreLabel.text = [NSString stringWithFormat:@"合格分数：%@",self.dataModel.passMark >= 0 ? [NSString stringWithFormat:@"%ld",self.dataModel.passMark] :@"-"];
-    
-    self.bestScoreLabel.text = [NSString stringWithFormat:@"最佳成绩：%@",self.dataModel.hsRecordScore >= 0 ? [NSString stringWithFormat:@"%ld",self.dataModel.hsRecordScore] :@"-"];
+    self.qualifiedLabel.text = [NSString stringWithFormat:@"%@",self.dataModel.passMark >= 0 ? [NSString stringWithFormat:@"%ld",self.dataModel.passMark] :@"-"];
     
     if (self.dataModel.stageType == 0) {//训练
-        self.qualifiedCountLabel.text = [NSString stringWithFormat:@"训练合格：%ld/%ld次",self.dataModel.examineStaffCount,self.dataModel.examineNumber];
-        self.practiceCountLabel.hidden = YES;
+        self.trainTitleLabel.text = @"训练合格：";
+        self.trainLabel.text = [NSString stringWithFormat:@"%ld/%ld次",self.dataModel.exerciseStaffCount,self.dataModel.trainingNumber];
+        self.examineTitleLabel.hidden = YES;
+        self.examineLabel.hidden = YES;
     }else  if (self.dataModel.stageType == 1) {//考核
-        self.qualifiedCountLabel.text = [NSString stringWithFormat:@"考核合格：%ld/%ld次",self.dataModel.examineStaffCount,self.dataModel.examineNumber];
+        self.trainTitleLabel.text = @"考核机会：";
+        self.trainLabel.text = [NSString stringWithFormat:@"%ld/%ld次",self.dataModel.examineStaffCount,self.dataModel.examineStaffCount];
+        self.examineTitleLabel.hidden = YES;
+        self.examineLabel.hidden = YES;
     }else  if (self.dataModel.stageType == 2) {//考核+训练
-        self.qualifiedCountLabel.text = [NSString stringWithFormat:@"训练合格：%ld/%ld次",self.dataModel.exerciseStaffCount,self.dataModel.examineNumber];
+        self.examineTitleLabel.hidden = NO;
+        self.examineLabel.hidden = NO;
+        self.trainTitleLabel.text = @"训练合格：";
+        self.trainLabel.text = [NSString stringWithFormat:@"%ld/%ld次",self.dataModel.exerciseStaffCount,self.dataModel.trainingNumber];
         
-        self.practiceCountLabel.text = [NSString stringWithFormat:@"考核合格：%ld/%ld次",self.dataModel.examineStaffCount,self.dataModel.examineNumber];
+        self.examineTitleLabel.text = @"考核机会：";
+        self.examineLabel.text = [NSString stringWithFormat:@"%ld/%ld次",self.dataModel.examineStaffCount,self.dataModel.examineStaffCount];
     }
     
+    self.bestLabel.text = [NSString stringWithFormat:@"最佳成绩：%ld",self.dataModel.hsRecordScore];
     
     if (!tf_isEmptyString(path)) {//已下载
+        
+        self.practiceView.hidden = NO;
+        self.bestLabel.hidden = NO;
+        self.recordButton.hidden = NO;
+        
         if (self.dataModel.stageType == 0) {//训练
             self.testButton.hidden = NO;
             self.praceticeButton.hidden = YES;
             [self.testButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.view);
+                make.centerX.equalTo(self.practiceView.mas_centerX);
             }];
         }else if (self.dataModel.stageType == 1) {//考核
             self.testButton.hidden = YES;
             self.praceticeButton.hidden = NO;
             [self.praceticeButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.view);
+                make.centerX.equalTo(self.practiceView.mas_centerX);
             }];
         }else if (self.dataModel.stageType == 2) {//考核+训练
             self.testButton.hidden = NO;
             self.praceticeButton.hidden = NO;
             [self.testButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.view).offset(-90);
+                make.centerX.equalTo(self.practiceView.mas_centerX).offset(-80);
             }];
             [self.praceticeButton mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.view).offset(90);
+                make.centerX.equalTo(self.practiceView.mas_centerX).offset(80);
             }];
         }
     }else{
         self.testButton.hidden = YES;
         self.praceticeButton.hidden = YES;
+        self.practiceView.hidden = YES;
+        self.bestLabel.hidden = YES;
+        self.recordButton.hidden = YES;
     }
 }
 
@@ -300,14 +387,21 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     vc.stageType = SBAIPracticeStageTypeExamine;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+-(void)recordButtonEvent{
+    SBAIPracticeRecordMainViewController *vc = [[SBAIPracticeRecordMainViewController alloc] init];
+    vc.navigationItem.title = self.dataModel.exerciseName;
+    vc.exerciseId = self.exerciseId;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark ---------懒加载页面组件
 -(UIImageView *)bgImg{
     if (!_bgImg) {
         _bgImg = [[UIImageView alloc] init];
         _bgImg.contentMode = UIViewContentModeScaleAspectFill;
         _bgImg.backgroundColor = [UIColor whiteColor];
-        _bgImg.layer.cornerRadius = 8;
-        _bgImg.clipsToBounds = YES;
+        _bgImg.image = [UIImage sb_imageNamedFromMyBundle:@"sb_ai_introduce_bg"];
     }
     return _bgImg;
 }
@@ -324,6 +418,16 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     return _avatar;
 }
 
+-(UIView *)bg{
+    if (!_bg) {
+        _bg = [[UIView alloc] init];
+        _bg.backgroundColor = [UIColor whiteColor];
+        _bg.layer.cornerRadius = 8;
+        _bg.clipsToBounds = YES;
+    }
+    return _bg;
+}
+
 -(UILabel *)nameLabel{
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
@@ -338,7 +442,7 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
         _positionView = [[UIView alloc] init];
         _positionView.layer.cornerRadius = 8;
         _positionView.clipsToBounds = YES;
-        _positionView.backgroundColor = HEXCOLOR(0x52A0FF);
+        _positionView.backgroundColor = HEXCOLOR(0xF5FBFF);
     }
     return _positionView;
 }
@@ -346,7 +450,7 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
 -(UILabel *)positionLabel{
     if (!_positionLabel) {
         _positionLabel = [[UILabel alloc] init];
-        _positionLabel.textColor = [UIColor whiteColor];
+        _positionLabel.textColor = HEXCOLOR(0x4A7BAF);
         _positionLabel.font = FONT_SYS_NOR(14);
     }
     return _positionLabel;
@@ -357,8 +461,8 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
         _downloadButton = [SBPracticeDownLoadProgressButton buttonWithType:UIButtonTypeCustom];
         [_downloadButton setTitle:@"下载资源" forState:UIControlStateNormal];
         [_downloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _downloadButton.layer.cornerRadius = 20;
-        _downloadButton.backgroundColor = HEXCOLOR(0x52A0FF);
+        _downloadButton.layer.cornerRadius = 21;
+        _downloadButton.backgroundColor = [UIColor gradientColorWithSize:CGSizeMake(SCREEN_WIDTH - 30 - 100, 42) direction:GradientColorDirectionLevel startColor:HEXCOLOR(0x449EFF) endColor:HEXCOLOR(0x58BFFF)];
         _downloadButton.clipsToBounds = YES;
         _downloadButton.hidden = YES;
         [_downloadButton addTarget:self action:@selector(downloadButtonEvent) forControlEvents:UIControlEventTouchUpInside];
@@ -402,36 +506,100 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     return _practiceView;
 }
 
--(UILabel *)qualifiedScoreLabel{
-    if (!_qualifiedScoreLabel) {
-        _qualifiedScoreLabel = [[UILabel alloc] init];
-        _qualifiedScoreLabel.textColor = HEXCOLOR(0x333333);
-        _qualifiedScoreLabel.font = FONT_SYS_NOR(15);
+-(UILabel *)qualifiedTitleLabel{
+    if (!_qualifiedTitleLabel) {
+        _qualifiedTitleLabel = [[UILabel alloc] init];
+        _qualifiedTitleLabel.textColor = HEXCOLOR(0x999999);
+        _qualifiedTitleLabel.font = FONT_SYS_NOR(14);
+        _qualifiedTitleLabel.text = @"合格分数：";
     }
-    return _qualifiedScoreLabel;
+    return _qualifiedTitleLabel;
 }
--(UILabel *)bestScoreLabel{
-    if (!_bestScoreLabel) {
-        _bestScoreLabel = [[UILabel alloc] init];
-        _bestScoreLabel.textColor = HEXCOLOR(0x333333);
-        _bestScoreLabel.font = FONT_SYS_NOR(15);
+
+-(UILabel *)qualifiedLabel{
+    if (!_qualifiedLabel) {
+        _qualifiedLabel = [[UILabel alloc] init];
+        _qualifiedLabel.textColor = HEXCOLOR(0x333333);
+        _qualifiedLabel.font = FONT_SYS_NOR(14);
     }
-    return _bestScoreLabel;
+    return _qualifiedLabel;
 }
--(UILabel *)qualifiedCountLabel{
-    if (!_qualifiedCountLabel) {
-        _qualifiedCountLabel = [[UILabel alloc] init];
-        _qualifiedCountLabel.textColor = HEXCOLOR(0x333333);
-        _qualifiedCountLabel.font = FONT_SYS_NOR(15);
+
+-(UILabel *)faceTitleLabel{
+    if (!_faceTitleLabel) {
+        _faceTitleLabel = [[UILabel alloc] init];
+        _faceTitleLabel.textColor = HEXCOLOR(0x999999);
+        _faceTitleLabel.font = FONT_SYS_NOR(14);
+        _faceTitleLabel.text = @"人脸监学：";
     }
-    return _qualifiedCountLabel;
+    return _faceTitleLabel;
 }
--(UILabel *)practiceCountLabel{
-    if (!_practiceCountLabel) {
-        _practiceCountLabel = [[UILabel alloc] init];
-        _practiceCountLabel.textColor = HEXCOLOR(0x333333);
-        _practiceCountLabel.font = FONT_SYS_NOR(15);
+
+-(UILabel *)faceLabel{
+    if (!_faceLabel) {
+        _faceLabel = [[UILabel alloc] init];
+        _faceLabel.textColor = HEXCOLOR(0x333333);
+        _faceLabel.font = FONT_SYS_NOR(14);
     }
-    return _practiceCountLabel;
+    return _faceLabel;
 }
+
+-(UILabel *)trainTitleLabel{
+    if (!_trainTitleLabel) {
+        _trainTitleLabel = [[UILabel alloc] init];
+        _trainTitleLabel.textColor = HEXCOLOR(0x999999);
+        _trainTitleLabel.font = FONT_SYS_NOR(14);
+    }
+    return _trainTitleLabel;
+}
+
+-(UILabel *)trainLabel{
+    if (!_trainLabel) {
+        _trainLabel = [[UILabel alloc] init];
+        _trainLabel.textColor = HEXCOLOR(0x333333);
+        _trainLabel.font = FONT_SYS_NOR(14);
+    }
+    return _trainLabel;
+}
+
+-(UILabel *)examineTitleLabel{
+    if (!_examineTitleLabel) {
+        _examineTitleLabel = [[UILabel alloc] init];
+        _examineTitleLabel.textColor = HEXCOLOR(0x999999);
+        _examineTitleLabel.font = FONT_SYS_NOR(14);
+    }
+    return _examineTitleLabel;
+}
+
+-(UILabel *)examineLabel{
+    if (!_examineLabel) {
+        _examineLabel = [[UILabel alloc] init];
+        _examineLabel.textColor = HEXCOLOR(0x333333);
+        _examineLabel.font = FONT_SYS_NOR(14);
+    }
+    return _examineLabel;
+}
+
+-(UILabel *)bestLabel{
+    if (!_bestLabel) {
+        _bestLabel = [[UILabel alloc] init];
+        _bestLabel.textColor = HEXCOLOR(0x333333);
+        _bestLabel.font = FONT_SYS_NOR(14);
+    }
+    return _bestLabel;
+}
+
+
+-(UIButton *)recordButton{
+    if (!_recordButton) {
+        _recordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _recordButton.backgroundColor = [UIColor clearColor];
+        [_recordButton setTitle:@"查看记录" forState:UIControlStateNormal];
+        [_recordButton setTitleColor:HEXCOLOR(0x3083D9) forState:UIControlStateNormal];
+        _recordButton.titleLabel.font = FONT_SYS_NOR(14);
+        [_recordButton addTarget:self action:@selector(recordButtonEvent) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _recordButton;
+}
+
 @end

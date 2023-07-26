@@ -134,7 +134,11 @@
     NSString *loginString = [[NSUserDefaults standardUserDefaults] objectForKey:@"SB_AI_LOGIN"];
     SBAIPracticeLoginModel *loginModel = [SBAIPracticeLoginModel mj_objectWithKeyValues:[loginString mj_JSONObject]];
     
+    //4.获取唯一标识id
     self.uniqueId = [NSString stringWithFormat:@"iOS_%ld_%@",timeInterval,loginModel.userId];
+    
+    //5.暂时不采用人脸相关服务
+    self.dataModel.supervision = NO;
 }
 
 #pragma mark ----------初始化页面UI

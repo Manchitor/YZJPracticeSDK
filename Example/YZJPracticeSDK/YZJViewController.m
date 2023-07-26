@@ -7,6 +7,8 @@
 //
 
 #import "YZJViewController.h"
+#import <YZJPracticeSDK/SBAIPracticeMainViewController.h>
+#import <YZJPracticeSDK/SBAIBaseNavViewController.h>
 
 @interface YZJViewController ()
 
@@ -24,6 +26,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    SBAIPracticeMainViewController *vc = [[SBAIPracticeMainViewController alloc] init];
+    SBAIBaseNavViewController *nav = [[SBAIBaseNavViewController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 @end

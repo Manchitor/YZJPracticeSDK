@@ -6,7 +6,7 @@
 //
 
 #import "SBPracticeDownLoadProgressButton.h"
-
+#import "SBAIPractice.h"
 @implementation SBPracticeDownLoadProgressButton
 
 
@@ -23,13 +23,13 @@
 {
     [super drawRect:rect];
     
-    UIBezierPath*path=[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 200*self.progress, 40) cornerRadius:0];
+    UIBezierPath*path=[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, (SCREEN_WIDTH - 130)*self.progress, 42) cornerRadius:0];
 
     path.lineWidth=20;
 
     //填充颜色
 
-    UIColor*fillColor=[UIColor greenColor];
+    UIColor*fillColor=[UIColor clearColor];
 
     [fillColor set];
 

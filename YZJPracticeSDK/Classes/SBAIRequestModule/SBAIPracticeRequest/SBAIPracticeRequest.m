@@ -20,11 +20,12 @@
 
 ///培训记录
 +(void)sb_exerciseTrainingRecoedRequest:(NSMutableDictionary*)params Success:(SBAIRequestResponseBlock) responseBlock{
-    [RequestManager PostWithUrl:SB_API_TRAINING_RECORD_LIST parameters:params response:^(BOOL isSuccess, SBAIResponseModel *responseObject) {
+    [RequestManager GetWithUrl:SB_API_TRAINING_RECORD_LIST parameters:params timeoutInterval:30 response:^(BOOL isSuccess, SBAIResponseModel *responseObject) {
         if (responseBlock) {
             responseBlock(isSuccess,responseObject);
         }
     }];
+    
 }
 
 ///答题分析

@@ -13,11 +13,11 @@
 
 
 @interface SBAIPracticeRecordListViewController ()<UITableViewDelegate,UITableViewDataSource>
+
 @property (nonatomic,strong)UITableView *tableview;
 
 @property (nonatomic,strong)NSMutableArray <SBAIPracticeTrainingRecordModel *>*dataArray;
 
-@property (nonatomic,assign) NSInteger page;
 @end
 
 @implementation SBAIPracticeRecordListViewController
@@ -34,7 +34,6 @@
 
 #pragma mark ----------初始化页面配置
 -(void)setupconfig{
-    self.page = 1;
     self.navigationItem.title = @"练习记录";
     self.view.backgroundColor = HEXCOLOR(0xf9f9f9);
 }
@@ -59,26 +58,14 @@
     MJWeakSelf;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:loginModel.userId forKey:@"userId"];
-    [params setValue:@(self.page) forKey:@"page"];
-    [params setValue:@"10" forKey:@"limit"];
-    
+    [params setValue:self.isPass ? @(1) : @(0) forKey:@"isPass"];//是否合格：0-否；1-是；null的情况下返回合格不合格的所有考核记录
+    [params setValue:self.exerciseId forKey:@"exerciseId"];
     
     [SBAIPracticeRequest sb_exerciseTrainingRecoedRequest:params Success:^(BOOL isSuccess, SBAIResponseModel *responseObject) {
-        
-        [weakSelf.tableview.mj_header endRefreshing];
-        [weakSelf.tableview.mj_footer endRefreshing];
-        
         if (isSuccess) {
-            if (weakSelf.page == 1){
-                weakSelf.dataArray = [SBAIPracticeTrainingRecordModel mj_objectArrayWithKeyValuesArray:[responseObject.data objectForKey:@"list"]];
-            }else{
-                [weakSelf.dataArray addObjectsFromArray: [SBAIPracticeTrainingRecordModel mj_objectArrayWithKeyValuesArray:[responseObject.data objectForKey:@"list"]]];
-            }
+            weakSelf.dataArray = [SBAIPracticeTrainingRecordModel mj_objectArrayWithKeyValuesArray:[responseObject.data objectForKey:@"list"]];
             [weakSelf.tableview reloadData];
         }else{
-            if (weakSelf.page > 1) {
-                weakSelf.page--;
-            }
             tf_toastMsg(responseObject.msg);
         }
     }];
@@ -113,16 +100,6 @@
     if (!_tableview) {
         _tableview = TABLEVIEW_INIT(UITableViewStylePlain, self);
         [_tableview registerClass:[SBAIPracticeRecordCell class] forCellReuseIdentifier:NSStringFromClass([SBAIPracticeRecordCell class])];
-
-        MJWeakSelf;
-        _tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-            weakSelf.page = 1;
-            [weakSelf loaddata];
-        }];
-        _tableview.mj_footer = [MJRefreshBackStateFooter footerWithRefreshingBlock:^{
-            weakSelf.page++;
-            [weakSelf loaddata];
-        }];
     }
     return _tableview;
 }

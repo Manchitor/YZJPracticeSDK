@@ -20,7 +20,7 @@
 
 #define SB_API_EXERCISE_LIST            @"exercise/selectExerciseList"
 
-#define SB_API_TRAINING_RECORD_LIST     @"exercise/selectTrainingRecord"
+#define SB_API_TRAINING_RECORD_LIST     @"exercise/queryExerciseStaffInfo"
 
 #define SB_API_PRACTICE_ANALYZE         @"exercise/selectRecordInfo"
 

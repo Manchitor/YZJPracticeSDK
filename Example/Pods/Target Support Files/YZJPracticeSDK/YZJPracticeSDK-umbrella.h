@@ -46,6 +46,7 @@
 #import "SBAIPracticeQuestionModel.h"
 #import "SBAIPracticeRecordCell.h"
 #import "SBAIPracticeRecordListViewController.h"
+#import "SBAIPracticeRecordMainViewController.h"
 #import "SBAIPracticeResultAnalyzeCell.h"
 #import "SBAIPracticeResultExplainCell.h"
 #import "SBAIPracticeResultInfoCell.h"
