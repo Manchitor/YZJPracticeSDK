@@ -63,7 +63,7 @@
     
     [SBAIPracticeRequest sb_exerciseTrainingRecoedRequest:params Success:^(BOOL isSuccess, SBAIResponseModel *responseObject) {
         if (isSuccess) {
-            weakSelf.dataArray = [SBAIPracticeTrainingRecordModel mj_objectArrayWithKeyValuesArray:[responseObject.data objectForKey:@"list"]];
+            weakSelf.dataArray = [SBAIPracticeTrainingRecordModel mj_objectArrayWithKeyValuesArray:[responseObject.data objectForKey:@"exerciseList"]];
             [weakSelf.tableview reloadData];
         }else{
             tf_toastMsg(responseObject.msg);

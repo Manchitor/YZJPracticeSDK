@@ -2,7 +2,7 @@ CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/YZJPracticeSDK
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD" "${PODS_CONFIGURATION_BUILD_DIR}/MJExtension" "${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh" "${PODS_CONFIGURATION_BUILD_DIR}/Masonry" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage" "${PODS_ROOT}/../../YZJPracticeSDK/Classes/SBAIFramework"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "CoreGraphics" -framework "Foundation" -framework "ImageIO" -framework "MBProgressHUD" -framework "MJExtension" -framework "MJRefresh" -framework "Masonry" -framework "QuartzCore" -framework "SDWebImage" -framework "UIKit"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "BDFaceBaseKit" -framework "CoreGraphics" -framework "Foundation" -framework "ImageIO" -framework "MBProgressHUD" -framework "MJExtension" -framework "MJRefresh" -framework "Masonry" -framework "QuartzCore" -framework "SDWebImage" -framework "UIKit"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_DEVELOPMENT_LANGUAGE = ${DEVELOPMENT_LANGUAGE}

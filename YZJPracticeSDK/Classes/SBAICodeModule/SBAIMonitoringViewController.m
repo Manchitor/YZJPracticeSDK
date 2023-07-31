@@ -11,7 +11,8 @@
 #import "FaceParameterConfig.h"
 
 #import "SBAIPractice.h"
-//#import "IDLFaceSDK.h"
+
+#import <BDFaceBaseKit/BDFaceBaseKit.h>
 //#import <IDLFaceSDK/IDLFaceSDK.h>
 
 @interface SBAIMonitoringViewController ()

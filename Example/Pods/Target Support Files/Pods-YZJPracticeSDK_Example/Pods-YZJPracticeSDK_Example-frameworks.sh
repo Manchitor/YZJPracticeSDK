@@ -182,7 +182,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
-  install_framework "${PODS_ROOT}/../../YZJPracticeSDK/Classes/SBAIFramework/IDLFaceSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YZJPracticeSDK/YZJPracticeSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -192,7 +191,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
-  install_framework "${PODS_ROOT}/../../YZJPracticeSDK/Classes/SBAIFramework/IDLFaceSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YZJPracticeSDK/YZJPracticeSDK.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
