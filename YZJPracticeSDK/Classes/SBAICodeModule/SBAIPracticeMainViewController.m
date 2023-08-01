@@ -31,12 +31,12 @@
     [super viewDidLoad];
     [self setupconfig];
     [self setupui];
+    
 }
 
 #pragma mark ----------初始化页面配置
 -(void)setupconfig{
     self.navigationItem.title = @"智能陪练";
-    NSLog(@"SBAIPracticeVersion:2.0.0");
 }
 
 #pragma mark ----------初始化页面UI

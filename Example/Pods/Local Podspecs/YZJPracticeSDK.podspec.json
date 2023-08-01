@@ -1,6 +1,6 @@
 {
   "name": "YZJPracticeSDK",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "summary": "A short description of YZJPracticeSDK.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/Manchitor/YZJPracticeSDK",
@@ -13,24 +13,12 @@
   },
   "source": {
     "git": "https://github.com/Manchitor/YZJPracticeSDK.git",
-    "tag": "0.1.4"
+    "tag": "0.1.6"
   },
   "platforms": {
     "ios": "11.0"
   },
   "source_files": "YZJPracticeSDK/Classes/**/*",
-  "vendored_frameworks": "YZJPracticeSDK/Classes/SBAIFramework/BDFaceBaseKit.framework",
-  "resource_bundles": {
-    "YZJPractice": [
-      "YZJPracticeSDK/Assets/*"
-    ]
-  },
-  "pod_target_xcconfig": {
-    "VALID_ARCHS[sdk=iphonesimulator*]": " "
-  },
-  "xcconfig": {
-    "OTHER_LDFLAGS": "-ObjC"
-  },
   "public_header_files": "YZJPracticeSDK/Classes/**/*.h",
   "dependencies": {
     "AFNetworking": [

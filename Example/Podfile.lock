@@ -21,7 +21,7 @@ PODS:
   - SDWebImage (5.17.0):
     - SDWebImage/Core (= 5.17.0)
   - SDWebImage/Core (5.17.0)
-  - YZJPracticeSDK (0.1.4):
+  - YZJPracticeSDK (0.1.6):
     - AFNetworking
     - Masonry
     - MBProgressHUD
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   MJExtension: 21c5f6f8c4d5d8844b7ae8fbae08fed0b501f961
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
-  YZJPracticeSDK: 5352508f51f6ccd182f5af865796d4b1e535592f
+  YZJPracticeSDK: e227706074952b63af327be70741e35562fe7874
 
 PODFILE CHECKSUM: f14261eab6cd586d3c2264357c0948fcf3a8c05d
 

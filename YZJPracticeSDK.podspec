@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YZJPracticeSDK'
-  s.version          = '0.1.4'
+  s.version          = '0.1.6'
   s.summary          = 'A short description of YZJPracticeSDK.'
 
 # This description is used to generate tags and improve search results.
@@ -31,15 +31,17 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'YZJPracticeSDK/Classes/**/*'
   
-  s.vendored_frameworks = 'YZJPracticeSDK/Classes/SBAIFramework/BDFaceBaseKit.framework'
-  
-  s.resource_bundles = {'YZJPractice' => ['YZJPracticeSDK/Assets/*']}
-  
-  s.pod_target_xcconfig = { 'VALID_ARCHS[sdk=iphonesimulator*]' => ' ' }
-    
-  s.xcconfig = { "OTHER_LDFLAGS" => "-ObjC" }
-  
-  #s.static_framework = true
+#  s.vendored_frameworks = 'YZJPracticeSDK/Classes/SBAIFramework/BDFaceBaseKit.framework','YZJPracticeSDK/Classes/SBAIFramework/BDFaceLogicLayer.framework'
+#
+#  s.libraries = 'c++','z'
+#
+#  s.resource_bundles = {'YZJPractice' => ['YZJPracticeSDK/Assets/*']}
+#
+#  s.pod_target_xcconfig = { 'VALID_ARCHS[sdk=iphonesimulator*]' => ' ' }
+#
+#  s.xcconfig = { "OTHER_LDFLAGS" => "-ObjC" }
+#
+#  s.static_framework = true
   
   s.public_header_files = 'YZJPracticeSDK/Classes/**/*.h'
 

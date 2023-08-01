@@ -138,7 +138,7 @@
     self.uniqueId = [NSString stringWithFormat:@"iOS_%ld_%@",timeInterval,loginModel.userId];
     
     //5.暂时不采用人脸相关服务
-    self.dataModel.supervision = NO;
+//    self.dataModel.supervision = NO;
 }
 
 #pragma mark ----------初始化页面UI
@@ -183,6 +183,9 @@
     if (self.dataModel.supervision) {
         self.monitoringvc.view.frame = CGRectMake(20, CGRectGetMaxY(self.backButton.frame) + 20, 80, 100);
         [self.view addSubview:self.monitoringvc.view];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SBAI_FACE_NOTIFICATION_INIT" object:nil];
+        NSLog(@"SBAI_FACE_NOTIFICATION_INIT");
     }
     
     //6.人脸表情识别
