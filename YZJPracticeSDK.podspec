@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YZJPracticeSDK'
-  s.version          = '0.1.6'
+  s.version          = '0.1.7'
   s.summary          = 'A short description of YZJPracticeSDK.'
 
 # This description is used to generate tags and improve search results.
@@ -35,14 +35,15 @@ TODO: Add long description of the pod here.
 #
 #  s.libraries = 'c++','z'
 #
-#  s.resource_bundles = {'YZJPractice' => ['YZJPracticeSDK/Assets/*']}
 #
 #  s.pod_target_xcconfig = { 'VALID_ARCHS[sdk=iphonesimulator*]' => ' ' }
 #
 #  s.xcconfig = { "OTHER_LDFLAGS" => "-ObjC" }
 #
 #  s.static_framework = true
-  
+
+  s.resource_bundles = {'YZJPractice' => ['YZJPracticeSDK/Assets/*']}
+
   s.public_header_files = 'YZJPracticeSDK/Classes/**/*.h'
 
 # s.frameworks = 'UIKit', 'MapKit'
