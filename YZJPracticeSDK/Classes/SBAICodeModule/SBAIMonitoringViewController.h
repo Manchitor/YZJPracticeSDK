@@ -8,12 +8,15 @@
 #import "SBAIBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
+typedef void (^FaceImageBlock)(UIImage *faceImage);
 
 @interface SBAIMonitoringViewController : SBAIBaseViewController
 
--(UIImage *)getFaceImage;
+
+-(void)getFaceImage:(FaceImageBlock)finish;
 
 -(void)stopSession;
+
 
 @end
 

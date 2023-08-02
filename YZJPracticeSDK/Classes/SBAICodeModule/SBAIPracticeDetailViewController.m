@@ -181,11 +181,8 @@
     
     //5.监学模式
     if (self.dataModel.supervision) {
-        self.monitoringvc.view.frame = CGRectMake(20, CGRectGetMaxY(self.backButton.frame) + 20, 80, 100);
+        self.monitoringvc.view.frame = CGRectMake(20, CGRectGetMaxY(self.backButton.frame) + 20, 0, 0);
         [self.view addSubview:self.monitoringvc.view];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SBAI_FACE_NOTIFICATION_INIT" object:nil];
-        NSLog(@"SBAI_FACE_NOTIFICATION_INIT");
     }
     
     //6.人脸表情识别
@@ -770,9 +767,13 @@
 
 -(void)getFaceImage{
     //1.获取人脸图片
-    UIImage *img = [self.monitoringvc getFaceImage];
-    //2.注入人脸图片
-    [self.faceocrvc faceImage:img];
+    MJWeakSelf;
+    [self.monitoringvc getFaceImage:^(UIImage * _Nonnull faceImage) {
+        if (faceImage) {
+            //2.注入人脸图片
+            [weakSelf.faceocrvc faceImage:faceImage];
+        }
+    }];
 }
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
