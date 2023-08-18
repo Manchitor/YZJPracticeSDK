@@ -1,5 +1,5 @@
 //
-//  SBPracticeDownLoadProgressButton.h
+//  SBAIPracticeDownLoadProgressButton.h
 //  SBAIDemo
 //
 //  Created by 刘永吉 on 2023/6/14.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SBPracticeDownLoadProgressButton : UIButton
+@interface SBAIPracticeDownLoadProgressButton : UIButton
 @property (nonatomic,assign) CGFloat progress;
 @end
 

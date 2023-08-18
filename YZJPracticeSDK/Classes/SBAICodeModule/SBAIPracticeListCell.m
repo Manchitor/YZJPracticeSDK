@@ -14,13 +14,21 @@
 @property (nonatomic,strong) UIView *bgView;
 
 @property (nonatomic,strong) UIImageView *coverImageView;
-@property (nonatomic,strong) UILabel *statuesLabel;
-@property (nonatomic,strong) UILabel *nameLabel;
-@property (nonatomic,strong) UIView *line;
 
-@property (nonatomic,strong) UIView *toolView;
+@property (nonatomic,strong) UIImageView *typeImg;
+
+@property (nonatomic,strong) UILabel *nameLabel;
+
 @property (nonatomic,strong) UIImageView *calendarImgView;
+
 @property (nonatomic,strong) UILabel *timeLabel;
+
+@property (nonatomic,strong) UIView *scoreView;
+
+@property (nonatomic,strong) UILabel *scoreTitleLabel;
+
+@property (nonatomic,strong) UILabel *scoreLabel;
+
 @property (nonatomic,strong) UIButton *doButton;
 
 @end
@@ -46,15 +54,22 @@
         make.top.equalTo(self.contentView.mas_top);
         make.left.equalTo(self.contentView.mas_left).offset(15);
         make.right.equalTo(self.contentView.mas_right).offset(-15);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-20);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-12);
     }];
     
     [self.bgView addSubview:self.coverImageView];
     [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bgView.mas_top).offset(15);
+        make.top.equalTo(self.bgView.mas_top).offset(10);
         make.left.equalTo(self.bgView.mas_left).offset(10);
         make.right.equalTo(self.bgView.mas_right).offset(-10);
         make.height.mas_equalTo(130);
+    }];
+    
+    [self.bgView addSubview:self.typeImg];
+    [self.typeImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(self.bgView);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(20);
     }];
     
     [self.bgView addSubview:self.nameLabel];
@@ -64,43 +79,47 @@
         make.right.equalTo(self.bgView.mas_right).offset(-10);
     }];
     
-    [self.bgView addSubview:self.line];
-    [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nameLabel.mas_bottom).offset(10);
-        make.left.equalTo(self.bgView.mas_left).offset(10);
-        make.right.equalTo(self.bgView.mas_right).offset(-10);
-        make.height.mas_equalTo(1);
-    }];
-    
-    [self.bgView addSubview:self.toolView];
-    [self.toolView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.line.mas_bottom).offset(0);
-        make.left.equalTo(self.bgView.mas_left).offset(0);
-        make.right.equalTo(self.bgView.mas_right).offset(0);
-        make.bottom.equalTo(self.bgView.mas_bottom);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.toolView addSubview:self.calendarImgView];
+    [self.bgView addSubview:self.calendarImgView];
     [self.calendarImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.toolView.mas_left).offset(10);
-        make.centerY.equalTo(self.toolView);
+        make.left.equalTo(self.bgView.mas_left).offset(10);
+        make.top.equalTo(self.nameLabel.mas_bottom).offset(9);
         make.width.mas_equalTo(16);
         make.height.mas_equalTo(16);
     }];
     
-    [self.toolView addSubview:self.timeLabel];
+    [self.bgView addSubview:self.timeLabel];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.calendarImgView.mas_right).offset(3);
-        make.centerY.equalTo(self.toolView);
+        make.centerY.equalTo(self.calendarImgView);
     }];
     
-    [self.toolView addSubview:self.doButton];
+    [self.bgView addSubview:self.scoreView];
+    [self.scoreView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.bgView.mas_left).offset(10);
+        make.right.equalTo(self.bgView.mas_right).offset(-10);
+        make.top.equalTo(self.timeLabel.mas_bottom).offset(9);
+        make.height.mas_equalTo(36);
+    }];
+    
+    [self.scoreView addSubview:self.scoreTitleLabel];
+    [self.scoreTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.scoreView.mas_left).offset(10);
+        make.centerY.equalTo(self.scoreView);
+    }];
+    
+    [self.scoreView addSubview:self.scoreLabel];
+    [self.scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.scoreTitleLabel.mas_right).offset(1);
+        make.centerY.equalTo(self.scoreView);
+    }];
+    
+    [self.bgView addSubview:self.doButton];
     [self.doButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.toolView.mas_right).offset(-10);
-        make.centerY.equalTo(self.toolView);
+        make.right.equalTo(self.bgView.mas_right).offset(-10);
+        make.top.equalTo(self.scoreView.mas_bottom).offset(10);
         make.width.mas_equalTo(62);
         make.height.mas_equalTo(25);
+        make.bottom.equalTo(self.bgView.mas_bottom).offset(-12);
     }];
 }
 
@@ -110,8 +129,62 @@
     [self.coverImageView sd_setImageWithURL:model.coverImage.toURL];
     self.nameLabel.text = model.exerciseName;
     self.timeLabel.text = [NSString stringWithFormat:@"截止时间：%@",model.offShelfDate];
-    self.statuesLabel.text = (model.status == 1) ? @"进行中":@"已结束";
+    
+    if (model.stageType == 0) {//0-培训，1-考核，2-培训+考核
+        self.typeImg.image = [UIImage sb_imageNamedFromMyBundle:@"sb_ai_xunlian"];
+    }else if (model.stageType == 1) {//0-培训，1-考核，2-培训+考核
+        self.typeImg.image = [UIImage sb_imageNamedFromMyBundle:@"sb_ai_kaohe"];
+    }else if (model.stageType == 2) {//0-培训，1-考核，2-培训+考核
+        self.typeImg.image = [UIImage sb_imageNamedFromMyBundle:@"sb_ai_xunkao"];
+    }
     self.doButton.hidden = !(model.status == 1);
+    
+    if (model.businessStatus == 2) {//0-去完成；1-已完成；2-已过期; 3-未通过
+        [self.doButton setTitle:@"已过期" forState:UIControlStateNormal];
+        self.doButton.backgroundColor = HEXCOLOR(0xE8E8E8);
+        [self.doButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.doButton.userInteractionEnabled = NO;
+        self.doButton.layer.borderColor = [UIColor clearColor].CGColor;
+        self.doButton.layer.borderWidth = 1;
+        
+        self.scoreView.hidden = YES;
+        [self.scoreView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0);
+        }];
+    }else if (model.businessStatus == 1) {//0-去完成；1-已完成；2-已过期; 3-未通过
+        [self.doButton setTitle:@"已完成" forState:UIControlStateNormal];
+        self.doButton.backgroundColor = [UIColor whiteColor];
+        [self.doButton setTitleColor:HEXCOLOR(0x52A0FF) forState:UIControlStateNormal];
+        self.doButton.userInteractionEnabled = YES;
+        self.doButton.layer.borderColor = HEXCOLOR(0x52A0FF).CGColor;
+        self.doButton.layer.borderWidth = 1;
+        self.scoreView.hidden = NO;
+        [self.scoreView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(36);
+        }];
+    }else if (model.businessStatus == 0) {//0-去完成；1-已完成；2-已过期; 3-未通过
+        [self.doButton setTitle:@"去完成" forState:UIControlStateNormal];
+        self.doButton.backgroundColor = HEXCOLOR(0x52A0FF);
+        [self.doButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.doButton.userInteractionEnabled = YES;
+        self.doButton.layer.borderColor = HEXCOLOR(0x52A0FF).CGColor;
+        self.doButton.layer.borderWidth = 1;
+        self.scoreView.hidden = YES;
+        [self.scoreView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0);
+        }];
+    }else if (model.businessStatus == 3) {//0-去完成；1-已完成；2-已过期; 3-未通过
+        [self.doButton setTitle:@"未通过" forState:UIControlStateNormal];
+        self.doButton.backgroundColor = [UIColor whiteColor];
+        [self.doButton setTitleColor:HEXCOLOR(0x52A0FF) forState:UIControlStateNormal];
+        self.doButton.userInteractionEnabled = YES;
+        self.doButton.layer.borderColor = HEXCOLOR(0x52A0FF).CGColor;
+        self.doButton.layer.borderWidth = 1;
+        self.scoreView.hidden = NO;
+        [self.scoreView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(36);
+        }];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -151,13 +224,11 @@
     return _coverImageView;
 }
 
--(UILabel *)statuesLabel{
-    if (!_statuesLabel){
-        _statuesLabel = [[UILabel alloc] init];
-        _statuesLabel.textColor = [UIColor whiteColor];
-        _statuesLabel.font = FONT_SYS_NOR(11);
+-(UIImageView *)typeImg{
+    if (!_typeImg) {
+        _typeImg = [[UIImageView alloc] init];
     }
-    return _statuesLabel;
+    return _typeImg;
 }
 
 -(UILabel *)nameLabel{
@@ -168,23 +239,6 @@
         _nameLabel.numberOfLines = 2;
     }
     return _nameLabel;
-}
-
--(UIView *)line{
-    if (!_line) {
-        _line = [[UIView alloc] init];
-        _line.backgroundColor = HEXCOLOR(0xE6E6E6);
-    }
-    return _line;
-}
--(UIView *)toolView{
-    if (!_toolView) {
-        _toolView = [[UIView alloc] init];
-        _toolView.layer.cornerRadius = 10;
-        _toolView.clipsToBounds = YES;
-        _toolView.backgroundColor = [UIColor whiteColor];
-    }
-    return _toolView;
 }
 
 -(UIImageView *)calendarImgView{
@@ -204,12 +258,39 @@
     return _timeLabel;
 }
 
+-(UIView *)scoreView{
+    if (!_scoreView) {
+        _scoreView = [[UIView alloc] init];
+        _scoreView.backgroundColor = HEXCOLOR(0xF4F5F6);
+        _scoreView.layer.cornerRadius = 5;
+        _scoreView.clipsToBounds = YES;
+    }
+    return _scoreView;
+}
+
+-(UILabel *)scoreTitleLabel{
+    if (!_scoreTitleLabel) {
+        _scoreTitleLabel = [[UILabel alloc] init];
+        _scoreTitleLabel.text = @"最佳成绩：";
+        _scoreTitleLabel.font = FONT_SYS_NOR(12);
+        _scoreTitleLabel.textColor = HEXCOLOR(0x666666);
+    }
+    return _scoreTitleLabel;
+}
+
+-(UILabel *)scoreLabel{
+    if (!_scoreLabel) {
+        _scoreLabel = [[UILabel alloc] init];
+        _scoreLabel.text = @"90";
+        _scoreLabel.font = FONT_SYS_SEMIBOLD(16);
+        _scoreLabel.textColor = HEXCOLOR(0x666666);
+    }
+    return _scoreLabel;
+}
+
 -(UIButton *)doButton{
     if (!_doButton) {
         _doButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _doButton.backgroundColor = HEXCOLOR(0x52A0FF);
-        [_doButton setTitle:@"去完成" forState:UIControlStateNormal];
-        [_doButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _doButton.layer.cornerRadius = 12.5;
         _doButton.clipsToBounds = YES;
         _doButton.titleLabel.font = FONT_SYS_MEDIUM(12);

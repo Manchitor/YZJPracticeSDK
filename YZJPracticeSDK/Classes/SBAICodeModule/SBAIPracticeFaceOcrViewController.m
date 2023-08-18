@@ -1,19 +1,19 @@
 //
-//  SBAIFaceOcrViewController.m
+//  SBAIPracticeFaceOcrViewController.m
 //  SBAIDemo
 //
 //  Created by 刘永吉 on 2023/5/11.
 //
 
-#import "SBAIFaceOcrViewController.h"
+#import "SBAIPracticeFaceOcrViewController.h"
 
-@interface SBAIFaceOcrViewController ()<WKNavigationDelegate, WKUIDelegate,WKScriptMessageHandler>
+@interface SBAIPracticeFaceOcrViewController ()<WKNavigationDelegate, WKUIDelegate,WKScriptMessageHandler>
 
 @property (nonatomic,strong) WKWebView *webview;
 
 @end
 
-@implementation SBAIFaceOcrViewController
+@implementation SBAIPracticeFaceOcrViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

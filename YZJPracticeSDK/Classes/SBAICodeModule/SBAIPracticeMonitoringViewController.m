@@ -1,28 +1,26 @@
 //
-//  SBAIMonitoringViewController.m
+//  SBAIPracticeMonitoringViewController.m
 //  SBAIDemo
 //
 //  Created by 刘永吉 on 2023/5/8.
 //
 
-#import "SBAIMonitoringViewController.h"
+#import "SBAIPracticeMonitoringViewController.h"
 
 #import "SBAIPractice.h"
 
-@interface SBAIMonitoringViewController ()
+@interface SBAIPracticeMonitoringViewController ()
 @property (nonatomic,strong) UIImage *faceImg;
 
 @property (nonatomic,copy) FaceImageBlock faceImageFinish;
 
 @end
 
-@implementation SBAIMonitoringViewController
+@implementation SBAIPracticeMonitoringViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//
-//    [self setupui];
-    
+
     //收到faceImg
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(faceImageNotification:) name:@"SBAI_FACE_NOTIFICATION_RESULT" object:nil];
     

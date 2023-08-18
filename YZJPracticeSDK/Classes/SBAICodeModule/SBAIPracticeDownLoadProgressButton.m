@@ -1,13 +1,13 @@
 //
-//  SBPracticeDownLoadProgressButton.m
+//  SBAIPracticeDownLoadProgressButton.m
 //  SBAIDemo
 //
 //  Created by 刘永吉 on 2023/6/14.
 //
 
-#import "SBPracticeDownLoadProgressButton.h"
+#import "SBAIPracticeDownLoadProgressButton.h"
 #import "SBAIPractice.h"
-@implementation SBPracticeDownLoadProgressButton
+@implementation SBAIPracticeDownLoadProgressButton
 
 
 - (void)setProgress:(CGFloat)progress

@@ -8,8 +8,8 @@
 #import "SBAIPracticeDetailViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Speech/Speech.h>
-#import "SBAIMonitoringViewController.h"
-#import "SBAIFaceOcrViewController.h"
+#import "SBAIPracticeMonitoringViewController.h"
+#import "SBAIPracticeFaceOcrViewController.h"
 #import "SBAIPracticeTextView.h"
 #import "SBAIPracticeAlertView.h"
 #import "SBAIPracticeRequest.h"
@@ -45,9 +45,9 @@
 ///语言类型
 @property (nonatomic, strong) NSLocale                  *locale;
 ///监学视图
-@property (nonatomic,strong) SBAIMonitoringViewController   *monitoringvc;
+@property (nonatomic,strong) SBAIPracticeMonitoringViewController   *monitoringvc;
 ///人脸表情识别
-@property (nonatomic,strong) SBAIFaceOcrViewController  *faceocrvc;
+@property (nonatomic,strong) SBAIPracticeFaceOcrViewController  *faceocrvc;
 @property (nonatomic,strong) dispatch_source_t  timer;//定时器
 ///返回按钮
 @property (nonatomic,strong) UIButton   *backButton;
@@ -861,18 +861,18 @@
     return _recognitionRequest;
 }
 
--(SBAIMonitoringViewController *)monitoringvc{
+-(SBAIPracticeMonitoringViewController *)monitoringvc{
     if(!_monitoringvc){
-        _monitoringvc = [[SBAIMonitoringViewController alloc] init];
+        _monitoringvc = [[SBAIPracticeMonitoringViewController alloc] init];
         _monitoringvc.isHidenNavigationBar = YES;
         [self addChildViewController:_monitoringvc];
     }
     return _monitoringvc;
 }
 
--(SBAIFaceOcrViewController *)faceocrvc{
+-(SBAIPracticeFaceOcrViewController *)faceocrvc{
     if (!_faceocrvc) {
-        _faceocrvc = [[SBAIFaceOcrViewController alloc] init];
+        _faceocrvc = [[SBAIPracticeFaceOcrViewController alloc] init];
         _faceocrvc.isHidenNavigationBar = YES;
         [self addChildViewController:_faceocrvc];
     }

@@ -7,7 +7,7 @@
 
 #import "SBAIPracticeIntroduceViewController.h"
 #import "SBAIPracticeDetailViewController.h"
-#import "SBPracticeDownLoadProgressButton.h"
+#import "SBAIPracticeDownLoadProgressButton.h"
 #import "SBAIPracticeRecordMainViewController.h"
 
 #import "SBAIPracticeRequest.h"
@@ -29,7 +29,7 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
 
 @property (nonatomic,strong) UIButton *testButton;
 @property (nonatomic,strong) UIButton *praceticeButton;
-@property (nonatomic,strong) SBPracticeDownLoadProgressButton *downloadButton;
+@property (nonatomic,strong) SBAIPracticeDownLoadProgressButton *downloadButton;
 @property (nonatomic,strong) UIView *practiceView;
 
 
@@ -68,6 +68,8 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     [super viewDidLoad];
     [self setupui];
     [self loaddata];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(faceCollectfinish) name:@"SBAI_FACE_NOTIFICATION_COLLECT_FINISH" object:nil];
 }
 
 -(void)setupui{
@@ -136,16 +138,16 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     }];
     
     //人脸
-    [self.practiceView addSubview:self.faceLabel];
-    [self.faceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.practiceView.mas_centerX).offset(-36);
-        make.top.equalTo(self.qualifiedLabel.mas_bottom).offset(10);
-    }];
-    
     [self.practiceView addSubview:self.faceTitleLabel];
     [self.faceTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.qualifiedLabel.mas_left).offset(0);
+        make.left.equalTo(self.qualifiedTitleLabel.mas_left).offset(0);
         make.top.equalTo(self.qualifiedTitleLabel.mas_bottom).offset(10);
+    }];
+    
+    [self.practiceView addSubview:self.faceLabel];
+    [self.faceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.faceTitleLabel.mas_right).offset(0);
+        make.top.equalTo(self.qualifiedLabel.mas_bottom).offset(10);
     }];
     
     //训练
@@ -256,6 +258,8 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     self.positionLabel.text = tf_isEmptyString(self.dataModel.robotCareer) ? @"" : self.dataModel.robotCareer;
     
     self.qualifiedLabel.text = [NSString stringWithFormat:@"%@",self.dataModel.passMark >= 0 ? [NSString stringWithFormat:@"%ld",self.dataModel.passMark] :@"-"];
+    
+    self.faceLabel.text = self.dataModel.facialExpression ? @"开启" : @"关闭";
     
     if (self.dataModel.stageType == 0) {//训练
         self.trainTitleLabel.text = @"训练合格：";
@@ -373,19 +377,35 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
 
 
 -(void)testButtonEvent{
-    SBAIPracticeDetailViewController *vc = [[SBAIPracticeDetailViewController alloc] init];
-    vc.isHidenNavigationBar = YES;
-    vc.dataModel = self.dataModel;
-    vc.stageType = SBAIPracticeStageTypeExercise;
-    [self.navigationController pushViewController:vc animated:YES];
+    NSString *loginString = [[NSUserDefaults standardUserDefaults] objectForKey:@"SB_AI_LOGIN"];
+    SBAIPracticeLoginModel *loginModel = [SBAIPracticeLoginModel mj_objectWithKeyValues:[loginString mj_JSONObject]];
+    
+    if (self.dataModel.supervision && !loginModel.faceFlag){//需要人脸
+        //发送通知 - 人脸验证
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SBAI_FACE_NOTIFICATION_CREATE" object:nil];
+    }else{
+        SBAIPracticeDetailViewController *vc = [[SBAIPracticeDetailViewController alloc] init];
+        vc.isHidenNavigationBar = YES;
+        vc.dataModel = self.dataModel;
+        vc.stageType = SBAIPracticeStageTypeExercise;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 -(void)practiceButtonEvent{
-    SBAIPracticeDetailViewController *vc = [[SBAIPracticeDetailViewController alloc] init];
-    vc.isHidenNavigationBar = YES;
-    vc.dataModel = self.dataModel;
-    vc.stageType = SBAIPracticeStageTypeExamine;
-    [self.navigationController pushViewController:vc animated:YES];
+    NSString *loginString = [[NSUserDefaults standardUserDefaults] objectForKey:@"SB_AI_LOGIN"];
+    SBAIPracticeLoginModel *loginModel = [SBAIPracticeLoginModel mj_objectWithKeyValues:[loginString mj_JSONObject]];
+    
+    if (self.dataModel.supervision && !loginModel.faceFlag){//需要人脸
+        //发送通知 - 人脸验证
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SBAI_FACE_NOTIFICATION_COLLECT" object:nil];
+    }else{
+        SBAIPracticeDetailViewController *vc = [[SBAIPracticeDetailViewController alloc] init];
+        vc.isHidenNavigationBar = YES;
+        vc.dataModel = self.dataModel;
+        vc.stageType = SBAIPracticeStageTypeExamine;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 -(void)recordButtonEvent{
@@ -393,6 +413,10 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     vc.navigationItem.title = self.dataModel.exerciseName;
     vc.exerciseId = self.exerciseId;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)faceCollectfinish{
+    NSLog(@"face_collectfinish");
 }
 
 #pragma mark ---------懒加载页面组件
@@ -456,9 +480,9 @@ typedef void (^DownloadProgressBlock)(CGFloat progress);
     return _positionLabel;
 }
 
--(SBPracticeDownLoadProgressButton *)downloadButton{
+-(SBAIPracticeDownLoadProgressButton *)downloadButton{
     if (!_downloadButton) {
-        _downloadButton = [SBPracticeDownLoadProgressButton buttonWithType:UIButtonTypeCustom];
+        _downloadButton = [SBAIPracticeDownLoadProgressButton buttonWithType:UIButtonTypeCustom];
         [_downloadButton setTitle:@"下载资源" forState:UIControlStateNormal];
         [_downloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _downloadButton.layer.cornerRadius = 21;

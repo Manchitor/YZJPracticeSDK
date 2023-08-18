@@ -56,7 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,assign) long status;// 0-下架，1-上架，2-上架中，3-上架失败
 
-@property (nonatomic,assign) BOOL supervision;
+@property (nonatomic,assign) long businessStatus;// 0-去完成；1-已完成；2-已过期; 3-未通过
+
+@property (nonatomic,assign) BOOL supervision;//是否开启监学：0否；1是
 
 @property (nonatomic,assign) long trainingNumber;//需要训练次数
 
